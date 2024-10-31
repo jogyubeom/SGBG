@@ -55,7 +55,11 @@ public class OpenaiServiceImpl implements OpenaiService {
             List<String> keywords = extractKeywords(resultContent);
             // 태그 추출
             tags = extractTags(resultContent);
-            searchService.saveTags(tags);
+
+            // elasticsearch에 저장
+            searchService.saveTags(tags, imageUrl);
+            searchService.saveTags(keywords, imageUrl);
+
 
             return keywords;
 
