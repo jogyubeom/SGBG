@@ -1,7 +1,14 @@
+import { Route, Routes } from 'react-router-dom'
+import MainPage from './pages/MainPage'
+import GlobalStyle from './GlobalStyles'
+
 function App() {
   return (
     <>
-      <h1>HI</h1>
+      <GlobalStyle />
+      <Routes>
+        <Route path="/" element={<MainPage />} />
+      </Routes>
     </>
   )
 }
