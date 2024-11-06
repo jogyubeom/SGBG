@@ -1,11 +1,18 @@
 server {
-    listen ${LISTEN_PORT};  # 환경 변수 LISTEN_PORT를 사용하여 포트 설정
+    listen ${LISTEN_PORT};
     server_name k11b205.p.ssafy.io;
 
     location / {
         root /usr/share/nginx/landinghtml;
         index index.html;
         try_files $uri $uri/ /index.html;
+    }
+
+    # MIME 타입 설정
+    types {
+        application/javascript js;
+        text/css css;
+        image/svg+xml svg;
     }
 
     error_page 500 502 503 504 /50x.html;
