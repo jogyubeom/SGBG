@@ -24,4 +24,4 @@ COPY --from=build /app/dist /usr/share/nginx/landinghtml
 COPY nginx.template /etc/nginx/templates/default.conf.template
 
 # Nginx 설정 파일에 환경 변수를 치환하고 적용
-CMD ["/bin/sh", "-c", "envsubst '${LISTEN_PORT}' < /etc/nginx/conf.d/default.conf.template > /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'"]
+CMD ["/bin/sh", "-c", "envsubst '${LISTEN_PORT}' < /etc/nginx/templates/default.conf.template > /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'"]
