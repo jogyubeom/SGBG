@@ -18,11 +18,10 @@ RUN npm run build
 FROM nginx:alpine
 
 # 빌드 결과물을 Nginx의 기본 경로로 복사
-COPY --from=build /app/dist /usr/share/nginx/html
+COPY --from=build /app/dist /usr/share/nginx/landinghtml
 
 # Nginx 템플릿 파일을 복사 (nginx.template 사용)
-COPY nginx.template /etc/nginx/conf.d/default.conf.template
+COPY nginx.template /etc/nginx/templates/default.conf.template
 
 # Nginx 설정 파일에 환경 변수를 치환하고 적용
-CMD ["/bin/sh", "-c", "envsubst '${LISTEN_PORT}' < /etc/nginx/conf.d/default.conf.template > /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'"]
-
+CMD ["/bin/sh", "-c", "envsubst '${LISTEN_PORT}' < /etc/nginx/templates/default.conf.template > /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'"]
