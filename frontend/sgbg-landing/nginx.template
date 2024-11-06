@@ -6,13 +6,12 @@ server {
         root /usr/share/nginx/landinghtml;
         index index.html;
         try_files $uri $uri/ /index.html;
-    }
 
-    # MIME 타입 설정
-    types {
-        application/javascript js;
-        text/css css;
-        image/svg+xml svg;
+        types {
+            application/javascript js;
+            text/css css;
+            image/svg+xml svg;
+        }
     }
 
     error_page 500 502 503 504 /50x.html;
