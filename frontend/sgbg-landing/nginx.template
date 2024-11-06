@@ -1,15 +1,26 @@
-server {
-    listen ${LISTEN_PORT};
-    server_name k11b205.p.ssafy.io;
+http {
+    include       /etc/nginx/mime.types;
+    default_type  application/octet-stream;
 
-    location / {
-        root /usr/share/nginx/landinghtml;
-        index index.html;
-        try_files $uri $uri/ /index.html;
-    }
+    server {
+        listen ${LISTEN_PORT};
+        server_name k11b205.p.ssafy.io;
 
-    error_page 500 502 503 504 /50x.html;
-    location = /50x.html {
-        root /usr/share/nginx/landinghtml;
+        location / {
+            root /usr/share/nginx/landinghtml;
+            index index.html;
+            try_files $uri $uri/ /index.html;
+            
+            types {
+                application/javascript js;
+                text/css css;
+                image/svg+xml svg;
+            }
+        }
+
+        error_page 500 502 503 504 /50x.html;
+        location = /50x.html {
+            root /usr/share/nginx/landinghtml;
+        }
     }
 }
