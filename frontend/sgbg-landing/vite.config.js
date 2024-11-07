@@ -7,6 +7,6 @@ export default defineConfig({
   plugins: [react(), svgr()],
   base: "/landing/",
   build: {
-    outDir: "dist",
+    target: "es2015",
   },
 });
