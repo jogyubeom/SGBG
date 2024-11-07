@@ -4,9 +4,8 @@ server {
 
     # /assets 경로의 정적 파일 매핑
     location /assets/ {
-        alias /usr/share/nginx/landinghtml/assets/;
+        root /usr/share/nginx/landinghtml;
         try_files $uri =404;
-        default_type application/javascript;  # MIME 타입 설정 추가
         types {
             application/javascript js;
             text/css css;
