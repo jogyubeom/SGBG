@@ -21,7 +21,8 @@ FROM nginx:alpine
 COPY --from=build /app/dist /usr/share/nginx/landinghtml
 
 # Nginx 템플릿 파일을 복사 (nginx.template 사용)
-COPY nginx.template /etc/nginx/templates/default.conf.template
+# COPY nginx.template /etc/nginx/templates/default.conf.template
+COPY nginx/default.conf /etc/nginx/conf.d/default.conf
 
 # Nginx 설정 파일에 환경 변수를 치환하고 적용
 CMD ["/bin/sh", "-c", "envsubst '${LISTEN_PORT}' < /etc/nginx/templates/default.conf.template > /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'"]
