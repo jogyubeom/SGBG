@@ -5,15 +5,19 @@ server {
     root /usr/share/nginx/landinghtml;
     index index.html;
 
-    location / {
-        try_files $uri $uri/ /index.html;
+    # /landing/ 경로에 대한 요청 처리
+    location /landing/ {
+        alias /usr/share/nginx/landinghtml/landing/;
+        try_files $uri $uri/ /landing/index.html;
     }
 
-    location /assets/ {
+    # 정적 자산에 대한 캐시 제어
+    location /landing/assets/ {
+        alias /usr/share/nginx/landinghtml/landing/assets/;
         add_header Cache-Control "public, max-age=31536000, immutable";
     }
 
-    error_page 404 /index.html;
+    error_page 404 /landing/index.html;
     error_page 500 502 503 504 /50x.html;
 
     location = /50x.html {
