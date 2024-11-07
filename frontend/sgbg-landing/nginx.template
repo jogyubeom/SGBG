@@ -2,25 +2,23 @@ server {
     listen ${LISTEN_PORT};
     server_name k11b205.p.ssafy.io;
 
-    root /usr/share/nginx/landinghtml;
+    root /usr/share/nginx/landinghtml/landing;
     index index.html;
 
-    # /landing/ 경로에 대한 요청 처리
     location /landing/ {
-        alias /usr/share/nginx/landinghtml/landing/;
-        try_files $uri $uri/ /landing/index.html;
+        # 요청 경로에서 /landing/ 부분을 제거하고 실제 파일 시스템 경로와 매핑
+        try_files $uri $uri/ /index.html;
     }
 
-    # 정적 자산에 대한 캐시 제어
     location /landing/assets/ {
-        alias /usr/share/nginx/landinghtml/landing/assets/;
+        # 정적 파일 캐싱 설정
         add_header Cache-Control "public, max-age=31536000, immutable";
     }
 
-    error_page 404 /landing/index.html;
+    error_page 404 /index.html;
     error_page 500 502 503 504 /50x.html;
 
     location = /50x.html {
-        root /usr/share/nginx/landinghtml;
+        root /usr/share/nginx/html;
     }
 }
