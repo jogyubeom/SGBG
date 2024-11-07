@@ -5,5 +5,5 @@ import svgr from "vite-plugin-svgr";
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react(), svgr()],
-  base: "landing/", // 정적 파일 경로 앞에 './' 추가
+  base: "./landing/", // 정적 파일 경로 앞에 './' 추가
 });

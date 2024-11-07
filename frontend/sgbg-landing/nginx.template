@@ -2,10 +2,15 @@ server {
     listen ${LISTEN_PORT};
     server_name k11b205.p.ssafy.io;
 
-    location / {
+    location /landing/assets/ {
+        root /usr/share/nginx/landinghtml/landing/assets/;
+        index  index.html index.htm;
+    }
+
+    location /landing/ {
         root /usr/share/nginx/landinghtml;
         index index.html;
-        try_files $uri $uri/ /index.html;
+        try_files $uri $uri/ /landing/index.html;
     }
 
     error_page 500 502 503 504 /50x.html;
