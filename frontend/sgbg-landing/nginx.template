@@ -2,17 +2,17 @@ server {
     listen ${LISTEN_PORT};
     server_name k11b205.p.ssafy.io;
 
-    # /landing/assets 경로를 정확히 매핑하여 정적 파일 불러오기
-    location /landing/assets/ {
+    # /assets 경로의 정적 파일 매핑
+    location /assets/ {
         alias /usr/share/nginx/landinghtml/assets/;
         try_files $uri $uri/ =404;
     }
 
-    # /landing 경로 설정
-    location /landing/ {
+    # 기본 경로를 /로 설정하여 모든 요청을 처리
+    location / {
         root /usr/share/nginx/landinghtml;
         index index.html;
-        try_files $uri $uri/ /landing/index.html;
+        try_files $uri $uri/ /index.html;
     }
 
     error_page 500 502 503 504 /50x.html;
