@@ -2,29 +2,26 @@ server {
     listen ${LISTEN_PORT};
     server_name k11b205.p.ssafy.io;
 
-    # root 경로를 빌드된 파일의 위치로 설정
+    # 기본 root 설정 (필요 시 삭제 가능)
     root /usr/share/nginx/landinghtml/landing;
-    index index.html;
 
-    # /landing/ 경로에 대한 요청 처리
-    location /landing/ {
-        try_files $uri $uri/ /index.html;
-    }
-
-    # 정적 파일에 대한 MIME 타입 설정
-    location ~* \.(js|css|png|jpg|jpeg|gif|svg|ico)$ {
+    # /landing/assets/ 경로에 대한 정적 파일 제공
+    location /landing/assets/ {
+        alias /usr/share/nginx/landinghtml/landing/assets/;
+        # 정적 파일에 대한 MIME 타입 자동 설정
         try_files $uri =404;
-        expires 1y;
         access_log off;
         add_header Cache-Control "public, max-age=31536000, immutable";
     }
 
-    # MIME 타입 설정 파일 포함
-    include /etc/nginx/mime.types;
-    default_type application/octet-stream;
+    # /landing/ 경로에 대한 요청 처리
+    location /landing/ {
+        alias /usr/share/nginx/landinghtml/landing/;
+        try_files $uri $uri/ /landing/index.html;
+    }
 
     # 에러 페이지 설정
-    error_page 404 /index.html;
+    error_page 404 /landing/index.html;
     error_page 500 502 503 504 /50x.html;
 
     location = /50x.html {
