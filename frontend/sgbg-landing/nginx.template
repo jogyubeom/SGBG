@@ -6,6 +6,11 @@ server {
     location /assets/ {
         alias /usr/share/nginx/landinghtml/assets/;
         try_files $uri $uri/ =404;
+        # JavaScript와 CSS 파일의 MIME 타입이 올바르게 설정되도록 추가
+        types {
+            application/javascript js;
+            text/css css;
+        }
     }
 
     # 기본 경로를 /로 설정하여 모든 요청을 처리
