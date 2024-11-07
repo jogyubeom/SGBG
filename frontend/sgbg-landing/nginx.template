@@ -2,7 +2,6 @@ server {
     listen ${LISTEN_PORT};
     server_name k11b205.p.ssafy.io;
 
-    # /landing/assets 경로의 정적 파일을 매핑
     location /landing/assets/ {
         alias /usr/share/nginx/landinghtml/assets/;
         try_files $uri $uri/ =404;
