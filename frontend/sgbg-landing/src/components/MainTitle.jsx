@@ -47,10 +47,21 @@ const s = {
     border-radius: 10px;
 
     font-size: 28px;
+
+    cursor: pointer;
   `,
 }
 
 const MatinTitle = () => {
+  const handleWindowsClick = () => {
+    window.location.href = 'https://github.com/jogyubeom/SGBG_release/releases/tag/v1.0.84'
+  }
+
+  const handleChromeClick = () => {
+    window.location.href =
+      'https://chromewebstore.google.com/detail/%EC%8B%B1%EA%B8%80%EB%B2%99%EA%B8%80/dkeojbjcmphonpoojkdobbdakebaljhe?hl=ko&utm_source=ext_sidebar'
+  }
+
   return (
     <>
       <s.TitleSection>
@@ -64,10 +75,10 @@ const MatinTitle = () => {
         <br />
         <s.TextWithTitle>지금 바로 싱글벙글과 함께 웹서핑의 재미를 두 배로 늘려보세요!</s.TextWithTitle>
         <s.DownloadButtonArea>
-          <s.DownloadButton>
+          <s.DownloadButton onClick={handleWindowsClick}>
             <WindowsLogo /> Windows 앱 다운로드
           </s.DownloadButton>
-          <s.DownloadButton>
+          <s.DownloadButton onClick={handleChromeClick}>
             <ChromeLogo /> 확장 프로그램 다운로드
           </s.DownloadButton>
         </s.DownloadButtonArea>
