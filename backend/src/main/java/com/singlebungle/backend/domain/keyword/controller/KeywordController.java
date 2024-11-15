@@ -56,4 +56,14 @@ public class KeywordController {
         return ResponseEntity.status(200).body(keywordRank);
     }
 
+    @GetMapping("/my")
+    public ResponseEntity<List<String>> getKeywords(
+            @RequestParam(required = false, defaultValue = "0") Long directoryId,
+            @RequestParam String keyword,
+            @RequestParam(required = false, defaultValue = "false") Boolean bin) {
+
+        List<String> keywords = keywordService.getKeywordsByConditions(directoryId, keyword, bin);
+        return ResponseEntity.ok(keywords);
+    }
+
 }

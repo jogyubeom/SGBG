@@ -1,7 +1,12 @@
 package com.singlebungle.backend.domain.keyword.service;
 
+import com.singlebungle.backend.domain.directory.entity.Directory;
+import com.singlebungle.backend.domain.directory.repository.DirectoryRepository;
+import com.singlebungle.backend.domain.image.repository.ImageDetailRepository;
+import com.singlebungle.backend.domain.image.repository.ImageManagementRepository;
 import com.singlebungle.backend.domain.keyword.dto.KeywordRankResponseDTO;
 import com.singlebungle.backend.domain.keyword.entity.Keyword;
+import com.singlebungle.backend.domain.image.entity.ImageDetail;
 import com.singlebungle.backend.domain.keyword.repository.KeywordRepository;
 import com.singlebungle.backend.global.exception.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +30,9 @@ import java.util.stream.Collectors;
 public class KeywordServiceImpl implements KeywordService {
 
     private final KeywordRepository keywordRepository;
+    private final DirectoryRepository directoryRepository;
+    private final ImageManagementRepository imageManagementRepository;
+    private final ImageDetailRepository imageDetailRepository;
 
     // @Qualifier로 특정 RedisTemplate을 주입받음
     @Qualifier("redisKeywordTemplate")
@@ -151,6 +159,41 @@ public class KeywordServiceImpl implements KeywordService {
                 .collect(Collectors.toList());
 
         return rankedKeywords;
+    }
+
+    public List<String> getKeywordsByConditions(Long directoryId, String keyword, Boolean bin) {
+        List<Directory> directories;
+
+        if (Boolean.TRUE.equals(bin)) {
+            // Fetch only "bin" directories (status == 2)
+            directories = directoryRepository.findByStatus(2);
+        } else {
+            if (directoryId == 0) {
+                // Fetch only default directories (status == 0)
+                directories = directoryRepository.findByStatus(0);
+            } else if (directoryId == -1) {
+                // Fetch all directories except the bin (status != 2)
+                directories = directoryRepository.findByStatusNot(2);
+            } else {
+                // Fetch specific directory by directoryId
+                directories = directoryRepository.findById(directoryId)
+                        .map(List::of)
+                        .orElseThrow(() -> new RuntimeException("Directory not found"));
+            }
+        }
+
+        // Get images linked to these directories
+        List<Long> imageIds = imageManagementRepository.findByCurDirectoryIn(directories).stream()
+                .map(im -> im.getImage().getImageId())
+                .collect(Collectors.toList());
+
+        // Get keywords associated with these images that match the search term
+        return imageDetailRepository.findByImage_ImageIdIn(imageIds).stream()
+                .map(ImageDetail::getKeyword)
+                .filter(kw -> kw.getKeywordName().contains(keyword))
+                .map(Keyword::getKeywordName)
+                .distinct()
+                .collect(Collectors.toList());
     }
 
 }

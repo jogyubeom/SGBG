@@ -11,4 +11,6 @@ import java.util.List;
 public interface ImageDetailRepository extends JpaRepository<ImageDetail, Long> {
 
     List<ImageDetail> findAllByImage(Image image);
+
+    List<ImageDetail> findByImage_ImageIdIn(List<Long> imageIds);
 }

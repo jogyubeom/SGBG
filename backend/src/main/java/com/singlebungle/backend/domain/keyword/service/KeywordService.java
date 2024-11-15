@@ -12,4 +12,6 @@ public interface KeywordService {
     void increaseCurCnt(String keyword);
 
     List<KeywordRankResponseDTO> getKeywordRankList();
+
+    List<String> getKeywordsByConditions(Long directoryId, String keyword, Boolean bin);
 }
