@@ -9,7 +9,7 @@ import {
   patchImageToTrash,
   postAppImage,
 } from "../lib/api/image-api"
-import { useParams } from "react-router-dom"
+import { useLocation, useParams } from "react-router-dom"
 import ImgDetailModal from "./ImgDetailModal"
 import { AppContext } from "../contexts/AppContext"
 import ImgListRightClickModal from "./ImgListRightClickModal"
@@ -83,6 +83,8 @@ const ImgList = () => {
   const [keywords, setKeywords] = useState("")
   const selectedImageKeyRef = useRef(selectedImageKey)
   const itemsRef = useRef(items)
+  const location = useLocation()
+  const stateKeyword = location.state?.stateKeyword
 
   // 이미지 우클릭 관리
   const [isRightClickModalOpen, setIsRightClickModalOpen] = useState(false)
@@ -96,7 +98,11 @@ const ImgList = () => {
     console.log(params, "params")
   }, [params])
 
-  const { searchKeywords, isLatest } = useContext(AppContext)
+  const { searchKeywords, setSearchKeywords, isLatest } = useContext(AppContext)
+
+  useEffect(() => {
+    console.log("여기예요여기", stateKeyword)
+  }, [stateKeyword])
 
   useEffect(() => {
     const result = searchKeywords.map((item) => item.keyword).join(",")
@@ -136,7 +142,6 @@ const ImgList = () => {
   const fetchFeedImages = async () => {
     if (isFetching || (totalPage !== null && currentPage > totalPage)) return
     setIsFetching(true)
-
     getFeedImages(
       currentPage,
       10,

@@ -43,8 +43,10 @@ const SearchBar = () => {
   const isHome = location.pathname === "/"
 
   useEffect(() => {
-    if (isHome && Boolean(searchKeywords.length)) {
-      navigate("/image")
+    if (isHome && searchKeywords.length > 0) {
+      console.log(searchKeywords[0].keyword, "keyword")
+      const stateKeyword = searchKeywords[0].keyword
+      navigate("/image", { state: { stateKeyword } })
     }
   }, [searchKeywords])
 
