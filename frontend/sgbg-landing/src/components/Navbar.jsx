@@ -36,6 +36,7 @@ const s = {
     border-radius: 10px;
 
     background-color: #000000;
+    cursor: pointer;
   `,
   LoginText: styled.span`
     font-size: 16px;
@@ -44,6 +45,10 @@ const s = {
 }
 
 const Navbar = () => {
+  const handleLoginClick = () => {
+    window.location.href = 'https://k11b205.p.ssafy.io/#/login'
+  }
+
   return (
     <>
       <s.Container>
@@ -51,7 +56,7 @@ const Navbar = () => {
           <s.NavLogo src={SingBungLogo} />
           <s.NavTitle>싱글벙글</s.NavTitle>
         </s.NavLogoArea>
-        <s.LoginButton>
+        <s.LoginButton onClick={handleLoginClick}>
           <s.LoginText>로그인</s.LoginText>
         </s.LoginButton>
       </s.Container>

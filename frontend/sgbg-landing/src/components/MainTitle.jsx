@@ -54,7 +54,7 @@ const s = {
 
 const MatinTitle = () => {
   const handleWindowsClick = () => {
-    window.location.href = 'https://github.com/jogyubeom/SGBG_release/releases/tag/v1.0.84'
+    window.location.href = 'https://github.com/jogyubeom/SGBG_release/releases/latest'
   }
 
   const handleChromeClick = () => {
