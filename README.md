@@ -49,8 +49,8 @@
 
 1. **데이터 저장소 선정**
     - MySQL: 정형 데이터 관리
-    - Redis: 캐싱을 위해 사용 
-        - 랭킹 및 
+    - Redis: 실시간 랭킹 및 캐싱
+        - SortedSet 및 Cache 사용 
     - Elasticsearch: 빠른 검색 결과 조회 
 
 2. 이미지 URL을 통한 이미지 키워드 데이터 추출 
